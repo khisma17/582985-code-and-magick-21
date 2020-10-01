@@ -16,27 +16,27 @@ const BAR_WIDTH = 40;
 const MAX_BAR_HEIGHT = CLOUD_HEIGHT - FONT_GAP * 4 - GAP - GAP / 2 - GAP / 2;
 const NAME_Y = CLOUD_Y + CLOUD_HEIGHT - FONT_GAP;
 
-const renderCloud = function (ctx, x, y, color) {
+const renderCloud = (ctx, x, y, color) => {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-const renderText = function (ctx, text, x, y) {
+const renderText = (ctx, text, x, y) => {
   ctx.fillStyle = '#000';
   ctx.textBaseline = 'hanging';
   ctx.font = '16px "PT Mono"';
   ctx.fillText(text, x, y);
 };
 
-const renderBar = function (ctx, color, x, y, width, height) {
+const renderBar = (ctx, color, x, y, width, height) => {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, width, height);
 };
 
-const getMaximumElement = function (array) {
+const getMaximumElement = (array) => {
   let maximumElement = array[0];
 
-  for (let i = 1; i < array.length; i++) {
+  for (let i = 1; i < array.length; i += 1) {
     if (array[i] > maximumElement) {
       maximumElement = array[i];
     }
@@ -45,12 +45,12 @@ const getMaximumElement = function (array) {
   return maximumElement;
 };
 
-const getRandomBlueShade = function () {
+const getRandomBlueShade = () => {
   const blueBarColor = `hsl(240, ${Math.random() * 100}%, 50%)`;
   return blueBarColor;
 };
 
-window.renderStatistics = function (ctx, names, times) {
+window.renderStatistics = (ctx, names, times) => {
   renderCloud(ctx, CLOUD_SHADOW_X, CLOUD_SHADOW_Y, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
@@ -59,7 +59,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   let maxTime = getMaximumElement(times);
 
-  for (let i = 0; i < names.length; i++) {
+  for (let i = 0; i < names.length; i += 1) {
     const barHeight = (MAX_BAR_HEIGHT * times[i]) / maxTime;
     const barX = CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_GAP) * i;
     const barY = CLOUD_Y + CLOUD_HEIGHT - FONT_GAP - GAP / 2 - barHeight;

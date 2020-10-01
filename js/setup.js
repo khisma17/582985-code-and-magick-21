@@ -5,6 +5,8 @@ const WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 
 const COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 const EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
+const NUMBER_OF_WIZARDS = 4;
+
 const userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
 
@@ -13,25 +15,29 @@ const similarWizardTemplate = document.querySelector('#similar-wizard-template')
 .content
 .querySelector('.setup-similar-item');
 
-const getRandomValue = function (array) {
-  return array[Math.round(Math.random() * (array.length - 1))];
-};
+const getRandomValueFromRange = (minimumValue, maximumValue) => Math.floor(Math.random() * (maximumValue - minimumValue + 1) + minimumValue);
 
-const wizards = [];
+const getRandomArrayElement = (array) => array[getRandomValueFromRange(0, array.length - 1)];
 
-const generateWizard = function () {
+const generateWizard = () => {
   const wizard = {};
-  wizard.name = getRandomValue(WIZARD_NAMES) + ' ' + getRandomValue(WIZARD_SURNAMES);
-  wizard.coatColor = getRandomValue(COAT_COLORS);
-  wizard.eyesColor = getRandomValue(EYES_COLORS);
+  wizard.name = `${getRandomArrayElement(WIZARD_NAMES)} ${getRandomArrayElement(WIZARD_SURNAMES)}`;
+  wizard.coatColor = getRandomArrayElement(COAT_COLORS);
+  wizard.eyesColor = getRandomArrayElement(EYES_COLORS);
   return wizard;
 };
 
-for (let i = 0; i < 4; i++) {
-  wizards.push(generateWizard());
-}
+const generateWizardsList = (numberOfWizards) => {
+  const wizards = [];
+  for (let i = 0; i < numberOfWizards; i += 1) {
+    wizards.push(generateWizard());
+  }
+  return wizards;
+};
 
-const renderWizard = function (wizard) {
+const wizards = generateWizardsList(NUMBER_OF_WIZARDS);
+
+const renderWizard = (wizard) => {
   const wizardElement = similarWizardTemplate.cloneNode(true);
 
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -41,14 +47,14 @@ const renderWizard = function (wizard) {
   return wizardElement;
 };
 
-const fillSimilarWizards = function (array) {
+const createWizardsFragment = (wizardsList) => {
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < array.length; i++) {
-    fragment.appendChild(renderWizard(array[i]));
+  for (let i = 0; i < wizardsList.length; i += 1) {
+    fragment.appendChild(renderWizard(wizardsList[i]));
   }
-  similarListElement.appendChild(fragment);
+  return fragment;
 };
 
-fillSimilarWizards(wizards);
+similarListElement.appendChild(createWizardsFragment(wizards));
 
 document.querySelector('.setup-similar').classList.remove('hidden');
