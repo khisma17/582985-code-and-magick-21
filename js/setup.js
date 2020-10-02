@@ -17,7 +17,11 @@ const similarWizardTemplate = document.querySelector('#similar-wizard-template')
 
 const getRandomValueFromRange = (minimumValue, maximumValue) => Math.floor(Math.random() * (maximumValue - minimumValue + 1) + minimumValue);
 
-const getRandomArrayElement = (array) => array[getRandomValueFromRange(0, array.length - 1)];
+const getRandomArrayElement = (array) => {
+  const randomIndex = getRandomValueFromRange(0, array.length - 1);
+
+  return array[randomIndex];
+};
 
 const generateWizard = () => {
   const wizard = {};
@@ -30,7 +34,8 @@ const generateWizard = () => {
 const generateWizardsList = (numberOfWizards) => {
   const wizards = [];
   for (let i = 0; i < numberOfWizards; i += 1) {
-    wizards.push(generateWizard());
+    const wizard = generateWizard();
+    wizards.push(wizard);
   }
   return wizards;
 };
