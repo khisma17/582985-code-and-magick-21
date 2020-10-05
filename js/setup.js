@@ -67,17 +67,17 @@ const closePopup = () => {
   setupClose.removeEventListener('keydown', onPopupCloseEnterPress);
 };
 
-setupOpen.addEventListener('click', function () {
+setupOpen.addEventListener('click', () => {
   openPopup();
 });
 
-setupOpen.addEventListener('keydown', function (evt) {
+setupOpen.addEventListener('keydown', (evt) => {
   if (evt.key === 'Enter') {
     openPopup();
   }
 });
 
-setupUsername.addEventListener('keydown', function (evt) {
+setupUsername.addEventListener('keydown', (evt) => {
   if (evt.key === 'Enter') {
     evt.preventDefault();
   }
@@ -85,22 +85,22 @@ setupUsername.addEventListener('keydown', function (evt) {
 
 // Изменение цвета мантии/глаз/фаербола
 
-wizardCoat.addEventListener('click', function () {
+wizardCoat.addEventListener('click', () => {
   const coatColor = getRandomArrayElement(COAT_COLORS);
   wizardCoat.setAttribute('style', `fill: ${coatColor}`);
-  wizardCoatInput.setAttribute('value', `${coatColor}`);
+  wizardCoatInput.setAttribute('value', coatColor);
 });
 
-wizardEyes.addEventListener('click', function () {
+wizardEyes.addEventListener('click', () => {
   const eyesColor = getRandomArrayElement(EYES_COLORS);
   wizardEyes.setAttribute('style', `fill: ${eyesColor}`);
-  wizardEyesInput.setAttribute('value', `${eyesColor}`);
+  wizardEyesInput.setAttribute('value', eyesColor);
 });
 
-fireball.addEventListener('click', function () {
+fireball.addEventListener('click', () => {
   const fireballColor = getRandomArrayElement(FIREBALL_COLORS);
   fireball.setAttribute('style', `background-color: ${fireballColor}`);
-  fireballInput.setAttribute('value', `${fireballColor}`);
+  fireballInput.setAttribute('value', fireballColor);
 });
 
 // Заполнение списка похожих волшебников
@@ -128,8 +128,8 @@ const renderWizard = (wizard) => {
   const wizardElement = similarWizardTemplate.cloneNode(true);
 
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  wizardElement.querySelector('.wizard-coat').setAttribute('fill', `${wizard.coatColor}`);
-  wizardElement.querySelector('.wizard-eyes').setAttribute('fill', `${wizard.eyesColor}`);
+  wizardElement.querySelector('.wizard-coat').setAttribute('fill', wizard.coatColor);
+  wizardElement.querySelector('.wizard-eyes').setAttribute('fill', wizard.eyesColor);
 
   return wizardElement;
 };
